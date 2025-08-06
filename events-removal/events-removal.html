@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Event Removal - Complete Guide</title>
+    <link rel="stylesheet" href="events-removal.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🗑️ JavaScript Event Removal Guide</h1>
+        <p>
+          Master all the ways to remove event listeners with interactive
+          examples
+        </p>
+      </div>
+
+      <div class="content">
+        <!-- Method 1: removeEventListener -->
+        <div class="method-card">
+          <div class="method-header">
+            <div class="method-title">1. removeEventListener()</div>
+            <div class="difficulty basic">BASIC</div>
+          </div>
+
+          <div class="explanation">
+            <strong>🎯 What it is:</strong> The standard and most common way to
+            remove event listeners. Think of it like unsubscribing from a
+            newsletter - you stop receiving notifications about that specific
+            event. <br /><br />
+            <strong>🔑 Key Point:</strong> You must use the EXACT same function
+            reference that you used when adding the listener!
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-title">🎮 Interactive Demo</div>
+
+            <div class="demo-controls">
+              <button class="demo-button success" onclick="addClickListener()">
+                Add Click Listener
+              </button>
+              <button
+                class="demo-button danger"
+                onclick="removeClickListener()"
+              >
+                Remove Click Listener
+              </button>
+              <button class="demo-button" onclick="resetDemo1()">
+                Reset Demo
+              </button>
+            </div>
+
+            <div class="demo-target" id="demo1Target">
+              Click me to test the event listener!
+            </div>
+
+            <div class="status-display" id="demo1Status">
+              Status: No event listener attached
+            </div>
+          </div>
+
+          <div class="code-example">
+            <span class="code-comment"
+              >// ✅ CORRECT WAY - Using function reference</span
+            >
+            <br />
+            <span class="code-keyword">function</span>
+            <span class="code-function">handleClick</span>() { console.log(<span
+              class="code-string"
+              >'Button clicked!'</span
+            >); }
+
+            <span class="code-comment">// Add the listener</span>
+            button.<span class="code-function">addEventListener</span>(<span
+              class="code-string"
+              >'click'</span
+            >, handleClick);
+
+            <span class="code-comment"
+              >// Remove the listener (same function reference!)</span
+            >
+            button.<span class="code-function">removeEventListener</span>(<span
+              class="code-string"
+              >'click'</span
+            >, handleClick);
+
+            <span class="code-comment">// ❌ WRONG WAY - This won't work!</span>
+            button.<span class="code-function">addEventListener</span>(<span
+              class="code-string"
+              >'click'</span
+            >, <span class="code-keyword">function</span>() { console.log(<span
+              class="code-string"
+              >'Click!'</span
+            >); });
+
+            <span class="code-comment"
+              >// This creates a NEW function, so removal fails</span
+            >
+            button.<span class="code-function">removeEventListener</span>(<span
+              class="code-string"
+              >'click'</span
+            >, <span class="code-keyword">function</span>() { console.log(<span
+              class="code-string"
+              >'Click!'</span
+            >); });
+          </div>
+
+          <div class="pros-cons">
+            <div class="pros">
+              <h4>✅ Pros</h4>
+              <ul>
+                <li>Standard and widely supported</li>
+                <li>Precise control over which listener to remove</li>
+                <li>Works with all event types</li>
+                <li>Memory efficient</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <h4>❌ Cons</h4>
+              <ul>
+                <li>Requires keeping function references</li>
+                <li>Won't work with anonymous functions</li>
+                <li>Must match exact parameters</li>
+                <li>Can be verbose for multiple listeners</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Method 2: AbortController -->
+        <!-- <div class="method-card">
+          <div class="method-header">
+            <div class="method-title">2. AbortController</div>
+            <div class="difficulty intermediate">INTERMEDIATE</div>
+          </div>
+
+          <div class="explanation">
+            <strong>🎯 What it is:</strong> A modern way to cancel multiple
+            event listeners at once. Think of it like a master power switch that
+            can turn off multiple devices simultaneously. <br /><br />
+            <strong>🔑 Key Point:</strong> Perfect for cleaning up when
+            components are destroyed or when you need to remove many listeners
+            together!
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-title">🎮 Interactive Demo</div>
+
+            <div class="demo-controls">
+              <button
+                class="demo-button success"
+                onclick="addMultipleListeners()"
+              >
+                Add Multiple Listeners
+              </button>
+              <button class="demo-button danger" onclick="abortAllListeners()">
+                Abort All Listeners
+              </button>
+              <button class="demo-button" onclick="resetDemo2()">
+                Reset Demo
+              </button>
+            </div>
+
+            <div class="demo-target" id="demo2Target">
+              Interact with me! (Click, hover, double-click)
+            </div>
+
+            <div class="status-display" id="demo2Status">
+              Status: No listeners attached
+            </div>
+          </div>
+
+          <div class="code-example">
+            <span class="code-comment">// Create an AbortController</span>
+            <span class="code-keyword">const</span> controller =
+            <span class="code-keyword">new</span>
+            <span class="code-function">AbortController</span>();
+
+            <span class="code-comment"
+              >// Add multiple listeners with the same signal</span
+            >
+            element.<span class="code-function">addEventListener</span>(<span
+              class="code-string"
+              >'click'</span
+            >, handleClick, { signal: controller.signal }); element.<span
+              class="code-function"
+              >addEventListener</span
+            >(<span class="code-string">'mouseover'</span>, handleMouseOver, {
+            signal: controller.signal }); element.<span class="code-function"
+              >addEventListener</span
+            >(<span class="code-string">'keydown'</span>, handleKeyDown, {
+            signal: controller.signal });
+
+            <span class="code-comment">// Remove ALL listeners at once!</span>
+            controller.<span class="code-function">abort</span>();
+            <span class="code-comment">// 💥 All gone instantly!</span>
+          </div>
+
+          <div class="pros-cons">
+            <div class="pros">
+              <h4>✅ Pros</h4>
+              <ul>
+                <li>Remove multiple listeners with one command</li>
+                <li>Modern and clean approach</li>
+                <li>Great for component cleanup</li>
+                <li>Works with any event type</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <h4>❌ Cons</h4>
+              <ul>
+                <li>Newer feature (not in very old browsers)</li>
+                <li>All-or-nothing approach</li>
+                <li>Requires planning ahead</li>
+                <li>Can't selectively remove individual listeners</li>
+              </ul>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- Method 2: Once Option -->
+        <div class="method-card">
+          <div class="method-header">
+            <div class="method-title">2. { once: true } Option</div>
+            <div class="difficulty basic">BASIC</div>
+          </div>
+
+          <div class="explanation">
+            <strong>🎯 What it is:</strong> A self-destructing event listener
+            that automatically removes itself after running once. Like a
+            firework that explodes and disappears! <br /><br />
+            <strong>🔑 Key Point:</strong> Perfect for one-time actions like
+            "Welcome" messages, initialization tasks, or confirmation dialogs.
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-title">🎮 Interactive Demo</div>
+
+            <div class="demo-controls">
+              <button class="demo-button success" onclick="addOnceListener()">
+                Add "Once" Listener
+              </button>
+              <button class="demo-button" onclick="resetDemo3()">
+                Reset Demo
+              </button>
+            </div>
+
+            <div class="demo-target" id="demo3Target">
+              Click me! (I'll only respond once)
+            </div>
+
+            <div class="status-display" id="demo3Status">
+              Status: No listener attached
+            </div>
+          </div>
+
+          <div class="code-example">
+            <span class="code-comment"
+              >// Event listener that runs only once</span
+            >
+            button.<span class="code-function">addEventListener</span>(<span
+              class="code-string"
+              >'click'</span
+            >, <span class="code-keyword">function</span>() { console.log(<span
+              class="code-string"
+              >'This will only run once!'</span
+            >);
+            <span class="code-comment"
+              >// Listener automatically removes itself after this</span
+            >
+            }, { once: <span class="code-keyword">true</span> });
+
+            <span class="code-comment">// Equivalent manual approach:</span>
+            <span class="code-keyword">function</span>
+            <span class="code-function">handleClickOnce</span>() {
+            console.log(<span class="code-string">'Clicked once!'</span>);
+            button.<span class="code-function">removeEventListener</span>(<span
+              class="code-string"
+              >'click'</span
+            >, handleClickOnce); } button.<span class="code-function"
+              >addEventListener</span
+            >(<span class="code-string">'click'</span>, handleClickOnce);
+
+            <span class="code-comment">// Common use cases:</span>
+            <span class="code-comment">// - Welcome messages</span>
+            <span class="code-comment">// - Initialization tasks</span>
+            <span class="code-comment">// - One-time confirmations</span>
+          </div>
+
+          <div class="pros-cons">
+            <div class="pros">
+              <h4>✅ Pros</h4>
+              <ul>
+                <li>Automatic cleanup - no memory leaks</li>
+                <li>Simple and clean syntax</li>
+                <li>Perfect for one-time events</li>
+                <li>No need to track function references</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <h4>❌ Cons</h4>
+              <ul>
+                <li>Can't be manually removed before firing</li>
+                <li>Only works for single-use scenarios</li>
+                <li>Less flexible than manual removal</li>
+                <li>Might fire unexpectedly if triggered early</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Method 3: Replacing innerHTML -->
+        <div class="method-card">
+          <div class="method-header">
+            <div class="method-title">3. Replacing innerHTML</div>
+            <div class="difficulty intermediate">INTERMEDIATE</div>
+          </div>
+
+          <div class="explanation">
+            <strong>🎯 What it is:</strong> When you replace an element's HTML
+            content, all event listeners on the old elements are automatically
+            removed. It's like demolishing a house and building a new one - all
+            the old wiring (events) is gone! <br /><br />
+            <strong>⚠️ Warning:</strong> This is a side effect, not a
+            recommended method for removing events. Use it carefully!
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-title">🎮 Interactive Demo</div>
+
+            <div class="demo-controls">
+              <button
+                class="demo-button success"
+                onclick="addListenersToButtons()"
+              >
+                Add Listeners to Buttons
+              </button>
+              <button class="demo-button warning" onclick="replaceInnerHTML()">
+                Replace innerHTML
+              </button>
+              <button class="demo-button" onclick="resetDemo4()">
+                Reset Demo
+              </button>
+            </div>
+
+            <div id="demo4Container">
+              <div class="demo-target" style="padding: 20px">
+                <button class="demo-button" id="btn1">Button 1</button>
+                <button class="demo-button" id="btn2">Button 2</button>
+                <button class="demo-button" id="btn3">Button 3</button>
+              </div>
+            </div>
+
+            <div class="status-display" id="demo4Status">
+              Status: Click "Add Listeners" first, then test buttons
+            </div>
+          </div>
+
+          <div class="code-example">
+            <span class="code-comment"
+              >// Original HTML with event listeners</span
+            >
+            <span class="code-keyword">const</span> container = document.<span
+              class="code-function"
+              >getElementById</span
+            >(<span class="code-string">'container'</span>);
+
+            <span class="code-comment">// Add event listeners to buttons</span>
+            container.<span class="code-function">querySelectorAll</span>(<span
+              class="code-string"
+              >'button'</span
+            >).<span class="code-function">forEach</span>(btn => { btn.<span
+              class="code-function"
+              >addEventListener</span
+            >(<span class="code-string">'click'</span>, handleClick); });
+
+            <span class="code-comment"
+              >// Replace innerHTML - ALL event listeners are lost!</span
+            >
+            container.innerHTML =
+            <span class="code-string"
+              >` &lt;button&gt;New Button 1&lt;/button&gt; &lt;button&gt;New
+              Button 2&lt;/button&gt; &lt;button&gt;New Button 3&lt;/button&gt;
+              `</span
+            >;
+
+            <span class="code-comment"
+              >// ⚠️ The new buttons have NO event listeners!</span
+            >
+            <span class="code-comment">// You'd need to add them again</span>
+          </div>
+
+          <div class="highlight">
+            <h4>⚠️ Important Notes</h4>
+            <p>
+              <strong
+                >This method should NOT be used intentionally to remove
+                events!</strong
+              >
+              It's mentioned here because it's a common source of bugs. When you
+              replace innerHTML, you lose all event listeners, which can break
+              your application's functionality.
+            </p>
+          </div>
+
+          <div class="pros-cons">
+            <div class="pros">
+              <h4>✅ Pros</h4>
+              <ul>
+                <li>Removes all listeners automatically</li>
+                <li>Completely resets the element</li>
+                <li>Can be useful for dynamic content</li>
+                <li>Simple to understand</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <h4>❌ Cons</h4>
+              <ul>
+                <li>Unintentional and often unwanted</li>
+                <li>Loses ALL listeners, not just specific ones</li>
+                <li>Requires re-adding needed listeners</li>
+                <li>Can cause bugs and broken functionality</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Method 4: Element Removal -->
+        <div class="method-card">
+          <div class="method-header">
+            <div class="method-title">4. Element Removal</div>
+            <div class="difficulty basic">BASIC</div>
+          </div>
+
+          <div class="explanation">
+            <strong>🎯 What it is:</strong> When you remove an element from the
+            DOM, all its event listeners are automatically cleaned up. It's like
+            throwing away a phone - you automatically stop receiving calls on
+            that number! <br /><br />
+            <strong>🔑 Key Point:</strong> Modern browsers handle this cleanup
+            automatically, preventing memory leaks.
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-title">🎮 Interactive Demo</div>
+
+            <div class="demo-controls">
+              <button
+                class="demo-button success"
+                onclick="createElementWithListener()"
+              >
+                Create Element with Listener
+              </button>
+              <button class="demo-button danger" onclick="removeElement()">
+                Remove Element
+              </button>
+              <button class="demo-button" onclick="resetDemo5()">
+                Reset Demo
+              </button>
+            </div>
+
+            <div id="demo5Container">
+              <!-- Dynamic elements will be added here -->
+            </div>
+
+            <div class="status-display" id="demo5Status">
+              Status: No element created yet
+            </div>
+          </div>
+
+          <div class="code-example">
+            <span class="code-comment"
+              >// Create element with event listener</span
+            >
+            <span class="code-keyword">const</span> button = document.<span
+              class="code-function"
+              >createElement</span
+            >(<span class="code-string">'button'</span>); button.textContent =
+            <span class="code-string">'Click me!'</span>;
+
+            <span class="code-comment">// Add event listener</span>
+            button.<span class="code-function">addEventListener</span>(<span
+              class="code-string"
+              >'click'</span
+            >, <span class="code-keyword">function</span>() { console.log(<span
+              class="code-string"
+              >'Button clicked!'</span
+            >); });
+
+            <span class="code-comment">// Add to DOM</span>
+            document.body.<span class="code-function">appendChild</span
+            >(button);
+
+            <span class="code-comment"
+              >// Remove element - event listener is automatically cleaned
+              up!</span
+            >
+            button.<span class="code-function">remove</span>();
+            <span class="code-comment"
+              >// or button.parentNode.removeChild(button)</span
+            >
+
+            <span class="code-comment"
+              >// 🎉 No memory leaks! Browser handles cleanup
+              automatically</span
+            >
+          </div>
+
+          <div class="pros-cons">
+            <div class="pros">
+              <h4>✅ Pros</h4>
+              <ul>
+                <li>Automatic cleanup by browser</li>
+                <li>No memory leaks</li>
+                <li>Simple and straightforward</li>
+                <li>Works for all listeners on the element</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <h4>❌ Cons</h4>
+              <ul>
+                <li>Removes the entire element</li>
+                <li>Can't selectively remove listeners</li>
+                <li>Might affect page layout</li>
+                <li>Loses all element data and state</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Method 6: Cloning Elements -->
+        <!-- <div class="method-card">
+          <div class="method-header">
+            <div class="method-title">5. Cloning Elements</div>
+            <div class="difficulty advanced">ADVANCED</div>
+          </div>
+
+          <div class="explanation">
+            <strong>🎯 What it is:</strong> When you clone an element, the clone
+            doesn't copy event listeners (by default). You can replace the
+            original with the clone to remove all listeners. It's like making a
+            photocopy of a document - the copy doesn't have the original's
+            sticky notes! <br /><br />
+            <strong>⚠️ Warning:</strong> This is a "nuclear option" - use it
+            only when you need to remove ALL listeners and start fresh.
+          </div>
+
+          <div class="demo-area">
+            <div class="demo-title">🎮 Interactive Demo</div>
+
+            <div class="demo-controls">
+              <button
+                class="demo-button success"
+                onclick="addMultipleListenersToClone()"
+              >
+                Add Multiple Listeners
+              </button>
+              <button class="demo-button warning" onclick="cloneAndReplace()">
+                Clone & Replace (Remove All)
+              </button>
+              <button class="demo-button" onclick="resetDemo6()">
+                Reset Demo
+              </button>
+            </div>
+
+            <div class="demo-target" id="demo6Target">
+              I can have multiple event listeners!<br />
+              <small>(Click, double-click, right-click, hover)</small>
+            </div>
+
+            <div class="status-display" id="demo6Status">
+              Status: No listeners attached
+            </div>
+          </div>
+
+          <div class="code-example">
+            <span class="code-comment"
+              >// Element with multiple event listeners</span
+            >
+            <span class="code-keyword">const</span> element = document.<span
+              class="code-function"
+              >getElementById</span
+            >(<span class="code-string">'myElement'</span>);
+
+            <span class="code-comment">// Add various listeners</span>
+            element.<span class="code-function">addEventListener</span>(<span
+              class="code-string"
+              >'click'</span
+            >, handleClick); element.<span class="code-function"
+              >addEventListener</span
+            >(<span class="code-string">'mouseover'</span>, handleMouseOver);
+            element.<span class="code-function">addEventListener</span>(<span
+              class="code-string"
+              >'keydown'</span
+            >, handleKeyDown);
+
+            <span class="code-comment"
+              >// Clone the element (without event listeners)</span
+            >
+            <span class="code-keyword">const</span> clone = element.<span
+              class="code-function"
+              >cloneNode</span
+            >(<span class="code-keyword">true</span>);
+            <span class="code-comment">// true = deep clone</span>
+
+            <span class="code-comment">// Replace original with clone</span>
+            element.parentNode.<span class="code-function">replaceChild</span
+            >(clone, element);
+
+            <span class="code-comment"
+              >// 🎉 All event listeners are gone!</span
+            >
+            <span class="code-comment"
+              >// The clone has the same content but no listeners</span
+            >
+          </div>
+
+          <div class="highlight">
+            <h4>🤔 When to Use This Method</h4>
+            <p>
+              This method is rarely used in practice because it's quite drastic.
+              Consider it when:
+            </p>
+            <ul>
+              <li>You have many unknown listeners to remove</li>
+              <li>You're dealing with third-party code that added listeners</li>
+              <li>You want to completely "reset" an element</li>
+              <li>Other methods are not feasible</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons">
+            <div class="pros">
+              <h4>✅ Pros</h4>
+              <ul>
+                <li>Removes ALL listeners guaranteed</li>
+                <li>Works even with unknown listeners</li>
+                <li>Preserves element content and attributes</li>
+                <li>Can be useful for "reset" functionality</li>
+              </ul>
+            </div>
+            <div class="cons">
+              <h4>❌ Cons</h4>
+              <ul>
+                <li>Nuclear option - removes everything</li>
+                <li>Loses element references in variables</li>
+                <li>Can break other code expecting the original element</li>
+                <li>Overkill for most situations</li>
+              </ul>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- Comparison Table -->
+        <div class="method-card">
+          <div class="method-header">
+            <div class="method-title">📊 Method Comparison</div>
+            <div class="difficulty intermediate">REFERENCE</div>
+          </div>
+
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Use Case</th>
+                <th>Precision</th>
+                <th>Difficulty</th>
+                <th>Browser Support</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>removeEventListener()</strong></td>
+                <td>Standard removal of specific listeners</td>
+                <td>High - targets specific listeners</td>
+                <td>Easy</td>
+                <td>Excellent</td>
+              </tr>
+              <!-- <tr>
+                <td><strong>AbortController</strong></td>
+                <td>Removing multiple listeners at once</td>
+                <td>Medium - groups of listeners</td>
+                <td>Medium</td>
+                <td>Modern browsers</td>
+              </tr> -->
+              <tr>
+                <td><strong>{ once: true }</strong></td>
+                <td>One-time event handling</td>
+                <td>High - automatic after first use</td>
+                <td>Easy</td>
+                <td>Good</td>
+              </tr>
+              <tr>
+                <td><strong>innerHTML replacement</strong></td>
+                <td>⚠️ Accidental removal (avoid)</td>
+                <td>Low - removes all listeners</td>
+                <td>Easy but dangerous</td>
+                <td>Excellent</td>
+              </tr>
+              <tr>
+                <td><strong>Element removal</strong></td>
+                <td>When element is no longer needed</td>
+                <td>Complete - removes element entirely</td>
+                <td>Easy</td>
+                <td>Excellent</td>
+              </tr>
+              <!-- <tr>
+                <td><strong>Element cloning</strong></td>
+                <td>Nuclear option for unknown listeners</td>
+                <td>Complete - removes all listeners</td>
+                <td>Advanced</td>
+                <td>Excellent</td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Best Practices -->
+        <!-- <div class="method-card">
+          <div class="method-header">
+            <div class="method-title">🏆 Best Practices & Tips</div>
+            <div class="difficulty intermediate">IMPORTANT</div>
+          </div>
+
+          <div class="highlight">
+            <h4>💡 Golden Rules for Event Removal</h4>
+            <ol style="padding-left: 20px; margin: 15px 0">
+              <li>
+                <strong>Always clean up:</strong> Remove event listeners when
+                they're no longer needed to prevent memory leaks
+              </li>
+              <li>
+                <strong>Use function references:</strong> Store functions in
+                variables if you need to remove them later
+              </li>
+              <li>
+                <strong>Consider AbortController:</strong> For modern
+                applications with multiple listeners
+              </li>
+              <li>
+                <strong>Use 'once' option:</strong> For one-time events instead
+                of manual removal
+              </li>
+              <li>
+                <strong>Be careful with innerHTML:</strong> Remember it removes
+                all listeners accidentally
+              </li>
+            </ol>
+          </div>
+
+          <div class="code-example">
+            <span class="code-comment">// ✅ BEST PRACTICE EXAMPLE</span>
+            <span class="code-keyword">class</span>
+            <span class="code-function">MyComponent</span> {
+            <span class="code-function">constructor</span>() {
+            <span class="code-comment"
+              >// Store function references for later removal</span
+            >
+            <span class="code-keyword">this</span>.handleClick =
+            <span class="code-keyword">this</span>.handleClick.<span
+              class="code-function"
+              >bind</span
+            >(<span class="code-keyword">this</span>);
+            <span class="code-keyword">this</span>.handleResize =
+            <span class="code-keyword">this</span>.handleResize.<span
+              class="code-function"
+              >bind</span
+            >(<span class="code-keyword">this</span>);
+
+            <span class="code-comment"
+              >// Use AbortController for multiple listeners</span
+            >
+            <span class="code-keyword">this</span>.abortController =
+            <span class="code-keyword">new</span>
+            <span class="code-function">AbortController</span>();
+
+            <span class="code-keyword">this</span>.<span class="code-function"
+              >init</span
+            >(); }
+
+            <span class="code-function">init</span>() {
+            <span class="code-comment">// Add listeners with abort signal</span>
+            document.<span class="code-function">addEventListener</span>(<span
+              class="code-string"
+              >'click'</span
+            >, <span class="code-keyword">this</span>.handleClick, { signal:
+            <span class="code-keyword">this</span>.abortController.signal });
+            window.<span class="code-function">addEventListener</span>(<span
+              class="code-string"
+              >'resize'</span
+            >, <span class="code-keyword">this</span>.handleResize, { signal:
+            <span class="code-keyword">this</span>.abortController.signal });
+
+            <span class="code-comment">// One-time listener</span>
+            document.<span class="code-function">addEventListener</span>(<span
+              class="code-string"
+              >'DOMContentLoaded'</span
+            >, <span class="code-keyword">this</span>.handleLoad, { once:
+            <span class="code-keyword">true</span>
+            }); }
+
+            <span class="code-function">destroy</span>() {
+            <span class="code-comment">// Clean up all listeners at once!</span>
+            <span class="code-keyword">this</span>.abortController.<span
+              class="code-function"
+              >abort</span
+            >(); }
+
+            <span class="code-function">handleClick</span>(event) {
+            <span class="code-comment">/* ... */</span> }
+            <span class="code-function">handleResize</span>(event) {
+            <span class="code-comment">/* ... */</span> }
+            <span class="code-function">handleLoad</span>(event) {
+            <span class="code-comment">/* ... */</span> } }
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <script src="events-removal.js"></script>
+  </body>
+</html>

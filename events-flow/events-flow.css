@@ -1,0 +1,38 @@
+.event-phase {
+  transition: all 0.3s ease;
+}
+.highlight {
+  background-color: #fbbf24 !important;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+}
+.capture-highlight {
+  background-color: #ef4444 !important;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+}
+.bubble-highlight {
+  background-color: #10b981 !important;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+}
+.event-log {
+  max-height: 200px;
+  overflow-y: auto;
+}
+.phase-arrow {
+  animation: pulse 1s infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+.nested-box {
+  cursor: pointer;
+  user-select: none;
+}

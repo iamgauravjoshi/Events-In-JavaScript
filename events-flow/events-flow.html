@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Event Flow Interactive Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="events-flow.css" />
+  </head>
+  <body class="bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen p-6">
+    <div class="max-w-7xl mx-auto">
+      <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">
+        JavaScript Event Flow Interactive Guide
+      </h1>
+
+      <!-- Event Flow Overview -->
+      <div class="mb-12 bg-white rounded-xl p-8 shadow-lg">
+        <h2 class="text-2xl font-semibold text-blue-700 mb-6">
+          📚 What is Event Flow?
+        </h2>
+        <div class="grid md:grid-cols-3 gap-6 mb-6">
+          <div class="bg-red-50 border-2 border-red-200 rounded-lg p-4">
+            <h3 class="font-semibold text-red-700 mb-2">1. Capture Phase</h3>
+            <p class="text-sm text-gray-600">
+              Event travels DOWN from document to target element
+            </p>
+          </div>
+          <div class="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-4">
+            <h3 class="font-semibold text-yellow-700 mb-2">2. Target Phase</h3>
+            <p class="text-sm text-gray-600">
+              Event reaches the actual clicked element
+            </p>
+          </div>
+          <div class="bg-green-50 border-2 border-green-200 rounded-lg p-4">
+            <h3 class="font-semibold text-green-700 mb-2">3. Bubble Phase</h3>
+            <p class="text-sm text-gray-600">
+              Event travels UP from target back to document
+            </p>
+          </div>
+        </div>
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <p class="text-blue-800">
+            <strong>Key Point:</strong> Most events bubble up by default, but
+            you can control this behavior!
+          </p>
+        </div>
+      </div>
+
+      <!-- Interactive Event Flow Demo -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-purple-700 mb-6">
+          🎯 Interactive Event Flow Demo
+        </h2>
+        <div class="grid lg:grid-cols-2 gap-8">
+          <!-- Visual Demo -->
+          <div class="bg-white rounded-xl p-6 shadow-lg">
+            <h3 class="text-lg font-semibold mb-4">
+              Click the inner button to see event flow:
+            </h3>
+
+            <!-- Nested Elements -->
+            <div
+              id="grandparent"
+              class="nested-box bg-blue-100 border-2 border-blue-300 rounded-lg p-6 mb-4"
+            >
+              <div class="text-sm font-medium text-blue-700 mb-2">
+                Grandparent (Document Level)
+              </div>
+              <div
+                id="parent"
+                class="nested-box bg-purple-100 border-2 border-purple-300 rounded-lg p-4 mb-4"
+              >
+                <div class="text-sm font-medium text-purple-700 mb-2">
+                  Parent Element
+                </div>
+                <div
+                  id="child"
+                  class="nested-box bg-pink-100 border-2 border-pink-300 rounded-lg p-4 mb-4"
+                >
+                  <div class="text-sm font-medium text-pink-700 mb-2">
+                    Child Element
+                  </div>
+                  <button
+                    id="target"
+                    class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    🎯 Click Me!
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="space-y-3">
+              <div class="flex items-center space-x-3">
+                <input
+                  type="checkbox"
+                  id="showCapture"
+                  class="w-4 h-4 accent-red-500"
+                />
+                <label for="showCapture" class="text-sm"
+                  >Show Capture Phase (red highlights)</label
+                >
+              </div>
+              <div class="flex items-center space-x-3">
+                <input
+                  type="checkbox"
+                  id="showBubble"
+                  checked
+                  class="w-4 h-4 accent-green-500"
+                />
+                <label for="showBubble" class="text-sm"
+                  >Show Bubble Phase (green highlights)</label
+                >
+              </div>
+              <button
+                id="clearLog"
+                class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm"
+              >
+                Clear Log
+              </button>
+            </div>
+          </div>
+
+          <!-- Event Log -->
+          <div class="bg-white rounded-xl p-6 shadow-lg">
+            <h3 class="text-lg font-semibold mb-4">Event Flow Log:</h3>
+            <div
+              id="eventLog"
+              class="event-log bg-gray-50 border rounded-lg p-4 min-h-[300px] font-mono text-sm"
+            >
+              <div class="text-gray-500">Click the button to see events...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Capture vs Bubble -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-green-700 mb-6">
+          ⚡ Capture vs Bubble Comparison
+        </h2>
+        <div class="grid lg:grid-cols-2 gap-8">
+          <!-- Bubble Demo -->
+          <div class="bg-white rounded-xl p-6 shadow-lg">
+            <h3 class="text-lg font-semibold mb-4 text-green-600">
+              Bubble Phase (Default)
+            </h3>
+            <div class="bg-gray-100 p-4 rounded-lg mb-4">
+              <code class="text-sm"
+                >element.addEventListener('click', handler)</code
+              >
+            </div>
+            <div
+              id="bubbleDemo"
+              class="bg-green-100 border-2 border-green-300 rounded-lg p-4"
+            >
+              <div class="text-sm font-medium text-green-700 mb-2">
+                Outer (bubbles last)
+              </div>
+              <div class="bg-green-200 border border-green-400 rounded p-3">
+                <div class="text-sm font-medium text-green-800 mb-2">
+                  Middle
+                </div>
+                <button
+                  class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded text-sm"
+                >
+                  Inner Button (bubbles first)
+                </button>
+              </div>
+            </div>
+            <div
+              id="bubbleLog"
+              class="mt-4 bg-gray-50 border rounded p-3 h-24 overflow-y-auto font-mono text-xs"
+            >
+              <div class="text-gray-500">
+                Click button to see bubble order...
+              </div>
+            </div>
+          </div>
+
+          <!-- Capture Demo -->
+          <div class="bg-white rounded-xl p-6 shadow-lg">
+            <h3 class="text-lg font-semibold mb-4 text-red-600">
+              Capture Phase
+            </h3>
+            <div class="bg-gray-100 p-4 rounded-lg mb-4">
+              <code class="text-sm"
+                >element.addEventListener('click', handler, {capture:
+                true})</code
+              >
+            </div>
+            <div
+              id="captureDemo"
+              class="bg-red-100 border-2 border-red-300 rounded-lg p-4"
+            >
+              <div class="text-sm font-medium text-red-700 mb-2">
+                Outer (captures first)
+              </div>
+              <div class="bg-red-200 border border-red-400 rounded p-3">
+                <div class="text-sm font-medium text-red-800 mb-2">Middle</div>
+                <button
+                  class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm"
+                >
+                  Inner Button (captures last)
+                </button>
+              </div>
+            </div>
+            <div
+              id="captureLog"
+              class="mt-4 bg-gray-50 border rounded p-3 h-24 overflow-y-auto font-mono text-xs"
+            >
+              <div class="text-gray-500">
+                Click button to see capture order...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stop Propagation Demo -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-orange-700 mb-6">
+          🛑 Controlling Event Flow
+        </h2>
+        <div class="grid lg:grid-cols-2 gap-8">
+          <!-- Stop Propagation -->
+          <div class="bg-white rounded-xl p-6 shadow-lg">
+            <h3 class="text-lg font-semibold mb-4">stopPropagation()</h3>
+            <div class="bg-gray-100 p-3 rounded-lg mb-4">
+              <code class="text-xs">event.stopPropagation()</code>
+              <p class="text-xs text-gray-600 mt-1">
+                Stops event from bubbling up
+              </p>
+            </div>
+            <div
+              id="stopPropDemo"
+              class="bg-orange-100 border-2 border-orange-300 rounded-lg p-4"
+            >
+              <div class="text-sm font-medium text-orange-700 mb-2">
+                Parent (won't receive event)
+              </div>
+              <button
+                id="stopPropBtn"
+                class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded text-sm"
+              >
+                Click me (stops propagation)
+              </button>
+            </div>
+            <div class="mt-4 flex items-center space-x-3">
+              <input
+                type="checkbox"
+                id="enableStopProp"
+                class="w-4 h-4 accent-orange-500"
+              />
+              <label for="enableStopProp" class="text-sm"
+                >Enable stopPropagation()</label
+              >
+            </div>
+            <div
+              id="stopPropLog"
+              class="mt-4 bg-gray-50 border rounded p-3 h-20 overflow-y-auto font-mono text-xs"
+            >
+              <div class="text-gray-500">Events will appear here...</div>
+            </div>
+          </div>
+
+          <!-- Prevent Default -->
+          <div class="bg-white rounded-xl p-6 shadow-lg">
+            <h3 class="text-lg font-semibold mb-4">preventDefault()</h3>
+            <div class="bg-gray-100 p-3 rounded-lg mb-4">
+              <code class="text-xs">event.preventDefault()</code>
+              <p class="text-xs text-gray-600 mt-1">
+                Prevents default browser behavior
+              </p>
+            </div>
+            <div class="space-y-4">
+              <div>
+                <a
+                  href="https://example.com"
+                  id="preventLink"
+                  class="text-blue-500 hover:text-blue-700 underline"
+                >
+                  Click this link (try with/without preventDefault)
+                </a>
+              </div>
+              <form id="preventForm" class="space-y-2">
+                <input
+                  type="text"
+                  placeholder="Enter something..."
+                  class="w-full p-2 border rounded text-sm"
+                />
+                <button
+                  type="submit"
+                  class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded text-sm"
+                >
+                  Submit Form
+                </button>
+              </form>
+            </div>
+            <div class="mt-4 flex items-center space-x-3">
+              <input
+                type="checkbox"
+                id="enablePreventDefault"
+                class="w-4 h-4 accent-blue-500"
+              />
+              <label for="enablePreventDefault" class="text-sm"
+                >Enable preventDefault()</label
+              >
+            </div>
+            <div
+              id="preventLog"
+              class="mt-4 bg-gray-50 border rounded p-3 h-20 overflow-y-auto font-mono text-xs"
+            >
+              <div class="text-gray-500">Actions will appear here...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Delegation -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-indigo-700 mb-6">
+          🎪 Event Delegation
+        </h2>
+        <div class="bg-white rounded-xl p-6 shadow-lg mb-10">
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <p class="text-gray-600">
+              Imagine you're throwing a birthday party.🎉 You could:
+            </p>
+            <li class="ml-2 text-gray-600">
+              Put one person at the door to greet guests (one event handler)
+            </li>
+            <li class="ml-2 text-gray-600">
+              Have every guest hire their own personal greeter (many handlers —
+              very inefficient).
+            </li>
+            <h3 class="font-semibold text-blue-700 mt-4 mb-4">
+              👉 Event Delegation is like assigning one smart greeter (event
+              handler) at a common spot (e.g., the door), who listens to all
+              guests (events) and knows how to respond depending on who the
+              guest is (target).
+            </h3>
+            <p class="text-gray-800 font-medium">
+              In programming (specifically JavaScript), instead of attaching an
+              event (like click) to every single child element, you attach one
+              event listener to their common parent, and handle events as they
+              bubble up from the child elements.
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-5 gap-4 mt-4">
+            <div>
+              <p class="font-medium text-gray-600 mb-2">HTML:</p>
+              <div class="bg-gray-100 p-3 rounded-lg mb-4">
+                <code class="text-xs">
+                  <p>&lt;ul id="fruits"&gt;</p>
+                  <p class="ml-3">&lt;li&gt;🍎 Apple&lt;/li&gt;</p>
+                  <p class="ml-3">&lt;li&gt;🍌 Banana&lt;/li&gt;</p>
+                  <p class="ml-3">&lt;li&gt;🍇 Grape&lt;/li&gt;</p>
+                  <p>&lt;/ul&gt;</p>
+                </code>
+              </div>
+            </div>
+
+            <div class="col-span-2">
+              <p class="font-medium text-gray-600 mb-2">
+                Now instead of doing this:
+              </p>
+              <div class="bg-gray-100 p-3 rounded-lg">
+                <code class="text-xs"
+                  >document.querySelectorAll('#fruits li').forEach(item =>
+                  {</code
+                >
+                <br />
+                <code class="text-xs"
+                  >&nbsp;&nbsp;item.addEventListener('click', function() {</code
+                >
+                <br />
+                <code class="text-xs"
+                  >&nbsp;&nbsp; &nbsp;&nbsp;alert(this.textContent);</code
+                >
+                <br />
+                <code class="text-xs">&nbsp;&nbsp;});</code>
+                <br />
+                <code class="text-xs">});</code>
+              </div>
+            </div>
+
+            <div class="col-span-2">
+              <p class="font-medium text-gray-600 mb-2">We do this:</p>
+              <div class="bg-gray-100 p-3 rounded-lg mb-4">
+                <code class="text-xs"
+                  >document.getElementById('fruits').addEventListener('click',
+                  function(event) {</code
+                >
+                <br />
+                <code class="text-xs"
+                  >&nbsp;&nbsp;if (event.target.tagName === 'LI') {</code
+                >
+                <br />
+                <code class="text-xs"
+                  >&nbsp;&nbsp;
+                  &nbsp;&nbsp;alert(event.target.textContent);</code
+                >
+                <br />
+                <code class="text-xs">&nbsp;&nbsp;}</code>
+                <br />
+                <code class="text-xs">});</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-8">
+          <!-- Without Delegation -->
+          <div class="bg-white rounded-xl p-6 shadow-lg">
+            <h3 class="text-lg font-semibold mb-4 text-red-600">
+              ❌ Without Event Delegation
+            </h3>
+            <div class="bg-gray-100 p-3 rounded-lg mb-4">
+              <code class="text-xs"
+                >// Adding listener to each button individually</code
+              >
+              <br />
+              <code class="text-xs"
+                >button1.addEventListener('click', handler)</code
+              >
+              <br />
+              <code class="text-xs"
+                >button2.addEventListener('click', handler)</code
+              >
+            </div>
+            <div id="withoutDelegation" class="space-y-2 mb-4">
+              <button
+                class="individual-btn bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm w-full"
+              >
+                Button 1 (individual listener)
+              </button>
+              <button
+                class="individual-btn bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm w-full"
+              >
+                Button 2 (individual listener)
+              </button>
+              <button
+                class="individual-btn bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm w-full"
+              >
+                Button 3 (individual listener)
+              </button>
+            </div>
+            <button
+              id="addIndividualBtn"
+              class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm"
+            >
+              Add New Button (needs new listener)
+            </button>
+            <div
+              id="individualLog"
+              class="mt-4 bg-gray-50 border rounded p-3 h-24 overflow-y-auto font-mono text-xs"
+            >
+              <div class="text-gray-500">Click buttons above...</div>
+            </div>
+          </div>
+
+          <!-- With Delegation -->
+          <div class="bg-white rounded-xl p-6 shadow-lg">
+            <h3 class="text-lg font-semibold mb-4 text-green-600">
+              ✅ With Event Delegation
+            </h3>
+            <div class="bg-gray-100 p-3 rounded-lg mb-4">
+              <code class="text-xs"
+                >// One listener on parent handles all children</code
+              >
+              <br />
+              <code class="text-xs"
+                >parent.addEventListener('click', (e) => {</code
+              >
+              <br />
+              <code class="text-xs"
+                >&nbsp;&nbsp;if (e.target.matches('.btn')) handler(e)</code
+              >
+              <br />
+              <code class="text-xs">})</code>
+            </div>
+            <div id="withDelegation" class="space-y-2 mb-4">
+              <button
+                class="delegated-btn bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded text-sm w-full"
+              >
+                Button A (delegated)
+              </button>
+              <button
+                class="delegated-btn bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded text-sm w-full"
+              >
+                Button B (delegated)
+              </button>
+              <button
+                class="delegated-btn bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded text-sm w-full"
+              >
+                Button C (delegated)
+              </button>
+            </div>
+            <button
+              id="addDelegatedBtn"
+              class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm"
+            >
+              Add New Button (automatically works!)
+            </button>
+            <div
+              id="delegatedLog"
+              class="mt-4 bg-gray-50 border rounded p-3 h-24 overflow-y-auto font-mono text-xs"
+            >
+              <div class="text-gray-500">Click buttons above...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Performance Comparison -->
+      <div class="mb-12 bg-white rounded-xl p-8 shadow-lg">
+        <h2 class="text-2xl font-semibold text-purple-700 mb-6">
+          ⚡ Why Event Delegation Matters
+        </h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+            <h3 class="font-semibold text-green-700 mb-2">🚀 Performance</h3>
+            <p class="text-sm text-gray-600">
+              One listener instead of hundreds = less memory usage
+            </p>
+          </div>
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 class="font-semibold text-blue-700 mb-2">🔄 Dynamic Content</h3>
+            <p class="text-sm text-gray-600">
+              New elements automatically get event handling
+            </p>
+          </div>
+          <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+            <h3 class="font-semibent text-purple-700 mb-2">🧹 Cleaner Code</h3>
+            <p class="text-sm text-gray-600">Less code to write and maintain</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-world Example -->
+      <div class="bg-white rounded-xl p-8 shadow-lg">
+        <h2 class="text-2xl font-semibold text-teal-700 mb-6">
+          🌟 Real-world Example: Todo List
+        </h2>
+        <div class="grid lg:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-lg font-semibold mb-4">
+              Interactive Todo List (using delegation)
+            </h3>
+            <div class="flex space-x-2 mb-4">
+              <input
+                type="text"
+                id="todoInput"
+                placeholder="Add a new todo..."
+                class="flex-1 p-2 border rounded"
+              />
+              <button
+                id="addTodo"
+                class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded"
+              >
+                Add
+              </button>
+            </div>
+            <ul id="todoList" class="space-y-2">
+              <li
+                class="flex items-center justify-between bg-gray-50 p-3 rounded"
+              >
+                <span>Sample todo item</span>
+                <div class="space-x-2">
+                  <button
+                    class="complete-btn bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-xs"
+                  >
+                    ✓
+                  </button>
+                  <button
+                    class="delete-btn bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs"
+                  >
+                    ✗
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold mb-4">How it works:</h3>
+            <div class="bg-gray-100 p-4 rounded-lg text-sm">
+              <code>
+                // One event listener handles all buttons<br />
+                todoList.addEventListener('click', (e) => {<br />
+                &nbsp;&nbsp;if (e.target.matches('.delete-btn')) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// Delete todo<br />
+                &nbsp;&nbsp;} else if (e.target.matches('.complete-btn')) {<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;// Complete todo<br />
+                &nbsp;&nbsp;}<br />
+                })
+              </code>
+            </div>
+            <div class="mt-4 p-4 bg-teal-50 border border-teal-200 rounded-lg">
+              <p class="text-sm text-teal-800">
+                <strong>Notice:</strong> New todos automatically get click
+                handling without adding new listeners!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="events-flow.js"></script>
+  </body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Event Object - Complete Guide</title>
+    <link rel="stylesheet" href="event-object.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>📦 JavaScript Event Object</h1>
+        <p>
+          Complete guide with all properties, methods, and interactive examples!
+        </p>
+      </div>
+
+      <div class="content">
+        <!-- Introduction -->
+        <div class="section">
+          <h2><span class="emoji">🤔</span>What is the Event Object?</h2>
+          <p>
+            When an event happens in JavaScript, the browser creates an "Event
+            Object" - a special package containing all the details about what
+            just occurred. Think of it as a detailed report card for every
+            interaction!
+          </p>
+
+          <div class="highlight">
+            <strong>🎯 The Event Object contains:</strong><br />
+            • What type of event happened (click, keypress, etc.)<br />
+            • Where it happened (coordinates, target element)<br />
+            • When it happened (timestamp)<br />
+            • How it happened (which keys were pressed, mouse button used)<br />
+            • Methods to control the event (stop it, prevent default behavior)
+          </div>
+
+          <div class="demo-container">
+            <p>Click this button to see your first Event Object:</p>
+            <button class="demo-button" onclick="showBasicEvent(event)">
+              🎯 Show Me the Event Object!
+            </button>
+            <div class="event-display" id="basicEventDisplay">
+              Click the button above to see the event object details...
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Properties -->
+        <div class="section">
+          <h2><span class="emoji">📋</span>Event Object Properties</h2>
+          <p>
+            The Event Object has many properties that give you detailed
+            information about what happened:
+          </p>
+
+          <div class="property-grid">
+            <div class="property-card">
+              <h3>type <span class="type">string</span></h3>
+              <p>
+                The name of the event (e.g., "click", "keydown", "mouseover")
+              </p>
+              <div class="code-example">event.type // "click"</div>
+            </div>
+
+            <div class="property-card">
+              <h3>target <span class="type">Element</span></h3>
+              <p>The element that triggered the event</p>
+              <div class="code-example">
+                event.target // &lt;button&gt;...&lt;/button&gt;
+              </div>
+            </div>
+
+            <div class="property-card">
+              <h3>currentTarget <span class="type">Element</span></h3>
+              <p>The element the event listener is attached to</p>
+              <div class="code-example">
+                event.currentTarget // listener element
+              </div>
+            </div>
+
+            <div class="property-card">
+              <h3>timeStamp <span class="type">number</span></h3>
+              <p>When the event occurred (milliseconds since page load)</p>
+              <div class="code-example">event.timeStamp // 1234.567</div>
+            </div>
+
+            <div class="property-card">
+              <h3>bubbles <span class="type">boolean</span></h3>
+              <p>Whether the event bubbles up through the DOM</p>
+              <div class="code-example">event.bubbles // true or false</div>
+            </div>
+
+            <div class="property-card">
+              <h3>cancelable <span class="type">boolean</span></h3>
+              <p>Whether the event can be cancelled</p>
+              <div class="code-example">event.cancelable // true or false</div>
+            </div>
+          </div>
+
+          <div class="demo-container">
+            <p>Try different interactions to see how properties change:</p>
+            <div
+              class="interactive-area"
+              onclick="showEventProperties(event)"
+              onmouseover="showEventProperties(event)"
+              onmouseout="showEventProperties(event)"
+              ondblclick="showEventProperties(event)"
+            >
+              🎮 Click, Double-click, or Hover Here!
+            </div>
+            <div class="event-display" id="propertiesDisplay">
+              Interact with the area above to see event properties...
+            </div>
+            <button
+              class="clear-button"
+              onclick="clearDisplay('propertiesDisplay')"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <!-- Mouse Event Properties -->
+        <div class="section">
+          <h2><span class="emoji">🖱️</span>Mouse Event Properties</h2>
+          <p>
+            Mouse events have additional properties specific to mouse
+            interactions:
+          </p>
+
+          <div class="property-grid">
+            <div class="property-card">
+              <h3>clientX, clientY <span class="type">number</span></h3>
+              <p>Mouse position relative to the browser window</p>
+              <div class="code-example">
+                event.clientX // 150<br />event.clientY // 200
+              </div>
+            </div>
+
+            <div class="property-card">
+              <h3>pageX, pageY <span class="type">number</span></h3>
+              <p>Mouse position relative to the entire page</p>
+              <div class="code-example">
+                event.pageX // 150<br />event.pageY // 800
+              </div>
+            </div>
+
+            <div class="property-card">
+              <h3>screenX, screenY <span class="type">number</span></h3>
+              <p>Mouse position relative to the user's screen</p>
+              <div class="code-example">
+                event.screenX // 500<br />event.screenY // 300
+              </div>
+            </div>
+
+            <div class="property-card">
+              <h3>button <span class="type">number</span></h3>
+              <p>Which mouse button was pressed (0=left, 1=middle, 2=right)</p>
+              <div class="code-example">event.button // 0, 1, or 2</div>
+            </div>
+
+            <div class="property-card">
+              <h3>buttons <span class="type">number</span></h3>
+              <p>Bitmask of which buttons are currently pressed</p>
+              <div class="code-example">event.buttons // 1, 2, 4, etc.</div>
+            </div>
+
+            <div class="property-card">
+              <h3>
+                altKey, ctrlKey, shiftKey <span class="type">boolean</span>
+              </h3>
+              <p>Whether modifier keys were pressed</p>
+              <div class="code-example">event.ctrlKey // true/false</div>
+            </div>
+          </div>
+
+          <div class="demo-container">
+            <p>
+              Move your mouse and click in this area to see mouse properties:
+            </p>
+            <div
+              class="interactive-area"
+              onmousemove="showMouseProperties(event)"
+              onclick="showMouseProperties(event)"
+              oncontextmenu="showMouseProperties(event); return false;"
+            >
+              🖱️ Move Mouse, Click, Right-click Here!<br />
+              <small>Try holding Ctrl, Alt, or Shift while clicking!</small>
+            </div>
+            <div class="event-display" id="mousePropertiesDisplay">
+              Move your mouse in the area above...
+            </div>
+            <button
+              class="clear-button"
+              onclick="clearDisplay('mousePropertiesDisplay')"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <!-- Keyboard Event Properties -->
+        <div class="section">
+          <h2><span class="emoji">⌨️</span>Keyboard Event Properties</h2>
+          <p>Keyboard events provide detailed information about key presses:</p>
+
+          <div class="property-grid">
+            <div class="property-card">
+              <h3>key <span class="type">string</span></h3>
+              <p>The actual key value (what you see)</p>
+              <div class="code-example">
+                event.key // "a", "Enter", "ArrowUp"
+              </div>
+            </div>
+
+            <div class="property-card">
+              <h3>code <span class="type">string</span></h3>
+              <p>The physical key code (keyboard layout independent)</p>
+              <div class="code-example">
+                event.code // "KeyA", "Enter", "ArrowUp"
+              </div>
+            </div>
+
+            <div class="property-card">
+              <h3>keyCode <span class="type">number</span></h3>
+              <p>Numeric key code (deprecated but still used)</p>
+              <div class="code-example">event.keyCode // 65, 13, 38</div>
+            </div>
+
+            <div class="property-card">
+              <h3>repeat <span class="type">boolean</span></h3>
+              <p>Whether the key is being held down</p>
+              <div class="code-example">event.repeat // true/false</div>
+            </div>
+          </div>
+
+          <div class="demo-container">
+            <p>Click in the text box and type to see keyboard properties:</p>
+            <input
+              type="text"
+              class="input-demo"
+              placeholder="Type here to see keyboard events..."
+              onkeydown="showKeyboardProperties(event)"
+              onkeyup="showKeyboardProperties(event)"
+            />
+            <div class="event-display" id="keyboardPropertiesDisplay">
+              Type in the input above to see keyboard event properties...
+            </div>
+            <button
+              class="clear-button"
+              onclick="clearDisplay('keyboardPropertiesDisplay')"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <!-- Event Methods -->
+        <div class="section">
+          <h2><span class="emoji">🛠️</span>Event Object Methods</h2>
+          <p>
+            The Event Object provides powerful methods to control event
+            behavior:
+          </p>
+
+          <div class="method-demo">
+            <h4>🛑 preventDefault()</h4>
+            <p>
+              Stops the default action from happening (like form submission,
+              link navigation)
+            </p>
+            <div class="code-example">
+              event.preventDefault(); // Stops default behavior
+            </div>
+
+            <div style="margin: 15px 0">
+              <a
+                href="https://google.com"
+                onclick="demonstratePreventDefault(event)"
+              >
+                🔗 Click this link (preventDefault will stop navigation)
+              </a>
+              <div
+                id="preventDefaultResult"
+                style="margin-top: 10px; color: #e74c3c; font-weight: bold"
+              ></div>
+            </div>
+          </div>
+
+          <div class="method-demo">
+            <h4>🚫 stopPropagation()</h4>
+            <p>Stops the event from bubbling up to parent elements</p>
+            <div class="code-example">
+              event.stopPropagation(); // Stops event bubbling
+            </div>
+
+            <div class="nested-demo" onclick="parentClick()">
+              <strong>Parent Element (Red Border)</strong>
+              <div class="child" onclick="childClick(event)">
+                <strong>Child Element (Blue)</strong>
+                <div class="grandchild" onclick="grandchildClick(event)">
+                  <strong>Grandchild (Green) - Click me!</strong>
+                </div>
+              </div>
+            </div>
+            <div
+              id="propagationResult"
+              style="
+                margin-top: 10px;
+                font-family: monospace;
+                background: #f8f9fa;
+                padding: 10px;
+                border-radius: 5px;
+              "
+            ></div>
+            <button
+              class="clear-button"
+              onclick="clearDisplay('propagationResult')"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div class="method-demo">
+            <h4>⛔ stopImmediatePropagation()</h4>
+            <p>
+              Stops event bubbling AND prevents other listeners on the same
+              element
+            </p>
+            <div class="code-example">
+              event.stopImmediatePropagation(); // Stops everything
+            </div>
+
+            <button class="demo-button" id="immediateStopButton">
+              🛑 Test stopImmediatePropagation()
+            </button>
+            <div
+              id="immediateStopResult"
+              style="
+                margin-top: 10px;
+                font-family: monospace;
+                background: #f8f9fa;
+                padding: 10px;
+                border-radius: 5px;
+              "
+            ></div>
+            <button
+              class="clear-button"
+              onclick="clearDisplay('immediateStopResult')"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <!-- Event Phases -->
+        <div class="section">
+          <h2>
+            <span class="emoji">🌊</span>Event Phases & eventPhase Property
+          </h2>
+          <p>
+            Events go through three phases. The eventPhase property tells you
+            which phase is currently happening:
+          </p>
+
+          <div class="info">
+            <strong>Event Phases:</strong><br />
+            • <strong>1 - Capturing Phase:</strong> Event travels down from
+            document to target<br />
+            • <strong>2 - Target Phase:</strong> Event reaches the target
+            element<br />
+            • <strong>3 - Bubbling Phase:</strong> Event bubbles back up to
+            document
+          </div>
+
+          <div class="demo-container">
+            <div class="nested-demo" id="phaseParent">
+              <strong>Parent Element</strong>
+              <div class="child" id="phaseChild">
+                <strong>Child Element</strong>
+                <div class="grandchild" id="phaseGrandchild">
+                  <strong>Target Element - Click Me!</strong>
+                </div>
+              </div>
+            </div>
+            <div class="event-display" id="phaseDisplay">
+              Click the green target element to see event phases...
+            </div>
+            <button class="clear-button" onclick="clearDisplay('phaseDisplay')">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <!-- Practical Examples -->
+        <div class="section">
+          <h2><span class="emoji">🎯</span>Practical Real-World Examples</h2>
+
+          <div class="method-demo">
+            <h4>📝 Smart Form Validation</h4>
+            <p>Using event properties to create intelligent form behavior:</p>
+
+            <form onsubmit="smartFormSubmit(event)">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                required
+                onkeydown="handleFormKeydown(event)"
+                onfocus="handleFormFocus(event)"
+                onblur="handleFormBlur(event)"
+              />
+              <button type="submit" class="demo-button">Submit</button>
+            </form>
+            <div
+              id="formFeedback"
+              style="margin-top: 10px; padding: 10px; border-radius: 5px"
+            ></div>
+          </div>
+
+          <div class="method-demo">
+            <h4>🎮 Game-like Interaction</h4>
+            <p>Using mouse coordinates and keyboard modifiers:</p>
+
+            <div
+              class="interactive-area"
+              onclick="gameInteraction(event)"
+              style="height: 200px; position: relative; overflow: hidden"
+            >
+              🎯 Click anywhere! Hold Ctrl for special effects!
+              <div id="gameElements"></div>
+            </div>
+            <div class="coordinates" id="gameCoordinates">
+              Click in the game area above...
+            </div>
+          </div>
+        </div>
+
+        <!-- Browser Compatibility -->
+        <div class="section">
+          <h2>
+            <span class="emoji">🌐</span>Browser Compatibility & Best Practices
+          </h2>
+
+          <div class="warning">
+            <strong>⚠️ Important Notes:</strong><br />
+            • Some properties like <code>keyCode</code> are deprecated<br />
+            • Always check if a property exists before using it<br />
+            • Mobile devices may have different event behaviors<br />
+            • Use feature detection for better compatibility
+          </div>
+
+          <div class="highlight">
+            <strong>✅ Best Practices:</strong><br />
+            • Use <code>event.key</code> instead of <code>event.keyCode</code
+            ><br />
+            • Always handle the event parameter properly<br />
+            • Use <code>preventDefault()</code> carefully - don't break
+            accessibility<br />
+            • Test your event handling on different devices and browsers
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="event-object.js"></script>
+  </body>
+</html>

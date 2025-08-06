@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Events</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="body-container">
+      <div class="header">
+        <h1>🎯 JavaScript Events Explained</h1>
+        <p>Interactive tutorial with live examples you can try!</p>
+      </div>
+
+      <div class="content">
+        <!-- What are Events Section -->
+        <div class="section">
+          <h2><span class="emoji">🤔</span>What are JavaScript Events?</h2>
+          <p>
+            Imagine a webpage as a playground. Events are the actions that
+            happen in this playground and web pages can "listen" for things
+            happening and react to them.
+          </p>
+          <p>
+            Without events, a web page is just static. Events make it
+            interactive — just like you pressing buttons in a lift, and the lift
+            responding!
+          </p>
+
+          <div class="highlight">
+            <strong>Simple Example:</strong>
+            <div>
+              When you click a button, that's a
+              <span class="font-bold text-gray-600">"click event".</span>
+            </div>
+            <div>
+              When you type in a text box, that's a
+              <span class="font-bold text-gray-600">"keypress event".</span>
+            </div>
+            <div>
+              When you move your mouse, that's a
+              <span class="font-bold text-gray-600">"mousemove event".</span>
+            </div>
+          </div>
+
+          <div class="demo-box">
+            <p>Try clicking this button to see an event in action!</p>
+            <button class="demo-button" onclick="showAlert()">
+              Click Me! 🎉
+            </button>
+            <p
+              id="click-result"
+              style="margin-top: 15px; color: #667eea; font-weight: bold"
+            ></p>
+          </div>
+        </div>
+
+        <!-- Types of Events -->
+        <div class="section">
+          <h2>
+            <span class="emoji">📝</span>Common Types of JavaScript Events
+          </h2>
+          <p>
+            There are many types of events, but here are the most common ones
+            you'll use:
+          </p>
+
+          <div class="grid">
+            <div class="card">
+              <h3>🖱️ Mouse Events</h3>
+              <ul>
+                <li><strong>click</strong> - When you click something</li>
+                <li><strong>dblclick</strong> - double click event</li>
+                <li>
+                  <strong>mouseover</strong> - When you hover over something
+                </li>
+                <li><strong>mouseout</strong> - When you move mouse away</li>
+                <li><strong>mousemove</strong> - When you move the mouse</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h3>⌨️ Keyboard Events</h3>
+              <ul>
+                <li><strong>keydown</strong> - When you press a key</li>
+                <li><strong>keyup</strong> - When you release a key</li>
+                <li><strong>keypress</strong> - When you type a character</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h3>📋 Form Events</h3>
+              <ul>
+                <li><strong>submit</strong> - When a form is submitted</li>
+                <li><strong>change</strong> - When input value changes</li>
+                <li><strong>focus</strong> - When you click in an input</li>
+                <li><strong>blur</strong> - When you click away from input</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <h3>🌐 Window Events</h3>
+              <ul>
+                <li><strong>load</strong> - When page finishes loading</li>
+                <li><strong>resize</strong> - When window size changes</li>
+                <li><strong>scroll</strong> - When you scroll the page</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h1 class="text-2xl font-bold text-gray-600 mb-8">
+              🎯 Interactive Event Demonstration
+            </h1>
+            <a
+              class="demo-button"
+              href="./events-demo/events-demo.html"
+              target="_blank"
+            >
+              <button>Go to Events Demo 👉</button>
+            </a>
+          </div>
+        </div>
+
+        <!-- Form Events Demo -->
+        <div class="section">
+          <h2><span class="emoji">📋</span>Form Events - Interactive Form</h2>
+          <p>Try interacting with this form to see different form events:</p>
+
+          <div class="form-demo">
+            <form onsubmit="handleFormSubmit(event)">
+              <input
+                type="text"
+                placeholder="Your name"
+                onfocus="handleFocus('name')"
+                onblur="handleBlur('name')"
+                onchange="handleChange('name')"
+                required
+              />
+
+              <input
+                type="email"
+                placeholder="Your email"
+                onfocus="handleFocus('email')"
+                onblur="handleBlur('email')"
+                onchange="handleChange('email')"
+                required
+              />
+
+              <select onchange="handleSelectChange(this.value)">
+                <option value="">Choose your favorite color</option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+              </select>
+
+              <button type="submit" class="demo-button">Submit Form</button>
+            </form>
+
+            <div class="event-log" id="formLog">
+              Form events will appear here...
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Handling Methods -->
+        <div class="section">
+          <h2 class="text-3xl font-bold text-gray-800 mb-8">
+            <span class="emoji">👂</span> JavaScript Event Handling Methods
+          </h2>
+          <p>
+            To make your webpage respond to events, you need to set up "event
+            listeners". Think of them as guards who watch for specific things to
+            happen.
+          </p>
+
+          <div class="highlight">
+            <strong>Three ways to add event listeners:</strong><br />
+            1. <strong>HTML way:</strong> onclick="doSomething()" (like we've
+            been using)<br />
+            2. <strong>JavaScript property:</strong> button.onclick = function()
+            { ... }<br />
+            3.
+            <strong>addEventListener:</strong> button.addEventListener('click',
+            function() { ... })
+          </div>
+
+          <div class="demo-box">
+            <p>This button uses addEventListener (the recommended way):</p>
+            <button id="advancedButton" class="demo-button">
+              Advanced Event Button
+            </button>
+            <div class="counter" id="advancedCounter">Clicks: 0</div>
+          </div>
+
+          <div class="mt-20 mb-4">
+            <a
+              href="./event-handling-methods/event-handling-methods.html"
+              class="demo-button"
+              target="_blank"
+            >
+              Go to Event Handling Methods 👉
+            </a>
+          </div>
+        </div>
+
+        <!-- Event Exection Order -->
+        <div class="section">
+          <h2 class="text-3xl font-bold text-gray-800 mb-8">
+            <span class="emoji">🎯</span>JavaScript Event Execution Order
+          </h2>
+
+          <div class="mt-10 mb-4">
+            <a
+              href="./events-flow/events-flow.html"
+              class="demo-button"
+              target="_blank"
+            >
+              Go to Events Flow 👉
+            </a>
+          </div>
+        </div>
+
+        <!-- Event Removal Methods -->
+        <div class="section">
+          <h2 class="text-3xl font-bold text-gray-800 mb-8">
+            <span class="emoji">🗑️</span>JavaScript Event Removal Guide
+          </h2>
+          <p>
+            Master all the ways to remove event listeners with interactive
+            examples
+          </p>
+
+          <div class="mt-10 mb-4">
+            <a
+              href="./events-removal/events-removal.html"
+              class="demo-button"
+              target="_blank"
+            >
+              Go to Event Removal Methods 👉
+            </a>
+          </div>
+        </div>
+
+        <!-- Event Object -->
+        <div class="section">
+          <h2 class="text-3xl font-bold text-gray-800 mb-8">
+            <span class="emoji">📦</span>The Event Object
+          </h2>
+          <p>
+            When an event happens, JavaScript gives you an "event object" with
+            useful information about what happened.
+          </p>
+
+          <div class="demo-box">
+            <p>Click anywhere in this box to see event details:</p>
+            <div
+              style="
+                background: #f0f0f0;
+                padding: 20px;
+                border-radius: 10px;
+                cursor: crosshair;
+              "
+              onclick="showEventDetails(event)"
+            >
+              Click me to see event information! 🎯
+            </div>
+            <div
+              id="eventDetails"
+              style="
+                margin-top: 15px;
+                font-family: monospace;
+                background: #2c3e50;
+                color: white;
+                padding: 15px;
+                border-radius: 5px;
+              "
+            >
+              Event details will appear here...
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h1 class="text-2xl font-bold text-gray-600 mb-8">
+              📦 JavaScript Event Object
+            </h1>
+            <a
+              href="./event-object/event-object.html"
+              class="demo-button"
+              target="_blank"
+            >
+              Go to Event Object 👉
+            </a>
+          </div>
+        </div>
+
+        <!-- Practical Examples -->
+        <div class="section">
+          <h2><span class="emoji">🛠️</span>Practical Examples</h2>
+          <p>Here are some real-world examples of how events are used:</p>
+
+          <div class="grid">
+            <div class="demo-box">
+              <h3>Image Gallery</h3>
+              <div
+                style="
+                  display: flex;
+                  gap: 10px;
+                  justify-content: center;
+                  margin: 20px 0;
+                "
+              >
+                <div
+                  style="
+                    width: 60px;
+                    height: 60px;
+                    background: #ff6b6b;
+                    border-radius: 5px;
+                    cursor: pointer;
+                  "
+                  onclick="changeBackground('#ff6b6b')"
+                ></div>
+                <div
+                  style="
+                    width: 60px;
+                    height: 60px;
+                    background: #4ecdc4;
+                    border-radius: 5px;
+                    cursor: pointer;
+                  "
+                  onclick="changeBackground('#4ecdc4')"
+                ></div>
+                <div
+                  style="
+                    width: 60px;
+                    height: 60px;
+                    background: #45b7d1;
+                    border-radius: 5px;
+                    cursor: pointer;
+                  "
+                  onclick="changeBackground('#45b7d1')"
+                ></div>
+              </div>
+              <p>Click colors to change background!</p>
+            </div>
+
+            <div class="demo-box">
+              <h3>Live Character Counter</h3>
+              <textarea
+                placeholder="Type your message..."
+                style="
+                  width: 100%;
+                  height: 80px;
+                  padding: 10px;
+                  border-radius: 5px;
+                  border: 2px solid #ddd;
+                "
+                oninput="updateCharCount(this.value)"
+              ></textarea>
+              <p>
+                Characters:
+                <span id="charCount" style="color: #667eea; font-weight: bold"
+                  >0</span
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Section  -->
+        <div class="section">
+          <h1 class="text-4xl font-bold text-center text-gray-800 mb-2">
+            🎉 JavaScript Events Quiz
+          </h1>
+          <p class="text-center text-gray-600 mb-6">
+            Test your knowledge of JavaScript events from basic to advanced!
+          </p>
+
+          <div class="mt-20 mb-10 text-center">
+            <a
+              class="demo-button text-center"
+              href="./events-quiz/events-quiz.html"
+              target="_blank"
+            >
+              <button>Go to Events Quiz 👉</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>

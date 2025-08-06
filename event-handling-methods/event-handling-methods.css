@@ -1,0 +1,66 @@
+.method-demo {
+  transition: all 0.3s ease;
+}
+.method-demo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+.execution-order {
+  animation: highlight 0.8s ease-in-out;
+}
+@keyframes highlight {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #fef3c7;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+.comparison-table {
+  overflow-x: auto;
+}
+.table-cell {
+  min-width: 120px;
+}
+.demo-button {
+  transition: all 0.2s ease;
+}
+.demo-button:active {
+  transform: scale(0.95);
+}
+.log-entry {
+  animation: slideInRight 0.3s ease-out;
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.method-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.inline-badge {
+  background: #fef3c7;
+  color: #92400e;
+}
+.property-badge {
+  background: #ddd6fe;
+  color: #5b21b6;
+}
+.listener-badge {
+  background: #d1fae5;
+  color: #065f46;
+}

@@ -1,0 +1,26 @@
+.event-card {
+  transition: all 0.3s ease;
+}
+.tooltip {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.tooltip.show {
+  opacity: 1;
+}
+.scroll-indicator {
+  width: 0%;
+  transition: width 0.1s ease;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+.pulse-animation {
+  animation: pulse 0.5s ease-in-out;
+}

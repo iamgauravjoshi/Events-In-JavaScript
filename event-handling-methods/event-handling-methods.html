@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Event Handling Methods - Complete Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="event-handling-methods.css" />
+  </head>
+  <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen p-6">
+    <div class="max-w-7xl mx-auto">
+      <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">
+        JavaScript Event Handling Methods
+      </h1>
+
+      <!-- Overview -->
+      <div class="mb-12 bg-white rounded-xl p-8 shadow-lg">
+        <h2 class="text-2xl font-semibold text-blue-700 mb-6">
+          📚 Three Ways to Handle Events
+        </h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-6">
+            <div class="method-badge inline-badge mb-3">Method 1</div>
+            <h3 class="text-lg font-semibold text-yellow-800 mb-3">
+              🏷️ Inline HTML
+            </h3>
+            <code class="text-sm bg-yellow-100 p-2 rounded block mb-3">
+              &lt;button onclick="myFunction()"&gt;
+            </code>
+            <p class="text-sm text-gray-600">
+              Event handler written directly in HTML attribute
+            </p>
+          </div>
+
+          <div class="bg-purple-50 border-2 border-purple-200 rounded-lg p-6">
+            <div class="method-badge property-badge mb-3">Method 2</div>
+            <h3 class="text-lg font-semibold text-purple-800 mb-3">
+              🎯 Property Method
+            </h3>
+            <code class="text-sm bg-purple-100 p-2 rounded block mb-3">
+              element.onclick = function() {}
+            </code>
+            <p class="text-sm text-gray-600">
+              Assign function to element's event property
+            </p>
+          </div>
+
+          <div class="bg-green-50 border-2 border-green-200 rounded-lg p-6">
+            <div class="method-badge listener-badge mb-3">Method 3</div>
+            <h3 class="text-lg font-semibold text-green-800 mb-3">
+              👂 addEventListener
+            </h3>
+            <code class="text-sm bg-green-100 p-2 rounded block mb-3">
+              element.addEventListener('click', fn)
+            </code>
+            <p class="text-sm text-gray-600">
+              Modern method that allows multiple handlers
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Individual Method Demos -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-indigo-700 mb-6">
+          🎯 Individual Method Demonstrations
+        </h2>
+
+        <!-- Method 1: Inline HTML -->
+        <div class="mb-8 bg-white rounded-xl p-6 shadow-lg method-demo">
+          <div class="flex items-center mb-4">
+            <div class="method-badge inline-badge mr-3">Method 1</div>
+            <h3 class="text-xl font-semibold text-yellow-700">
+              Inline HTML Event Handlers
+            </h3>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-6">
+            <div>
+              <div
+                class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4"
+              >
+                <h4 class="font-semibold mb-2">How it works:</h4>
+                <code class="text-sm block mb-2"
+                  >&lt;button onclick="handleClick()"&gt;Click
+                  Me&lt;/button&gt;</code
+                >
+                <p class="text-sm text-gray-600">
+                  The event handler is written directly in the HTML attribute.
+                </p>
+              </div>
+
+              <div class="space-y-3">
+                <button
+                  onclick="handleInlineClick(this, 'Button 1')"
+                  class="demo-button bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded w-full"
+                >
+                  🟡 Inline Handler - Button 1
+                </button>
+
+                <button
+                  onclick="handleInlineClick(this, 'Button 2')"
+                  class="demo-button bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded w-full"
+                >
+                  🟡 Inline Handler - Button 2
+                </button>
+
+                <div class="bg-gray-100 p-3 rounded">
+                  <strong>Pros:</strong> Simple, quick for small projects<br />
+                  <strong>Cons:</strong> Mixes HTML and JavaScript, hard to
+                  maintain
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="font-semibold mb-3">Inline Method Log:</h4>
+              <div
+                id="inlineLog"
+                class="bg-yellow-50 border rounded-lg p-4 h-48 overflow-y-auto font-mono text-sm"
+              >
+                <div class="text-gray-500">
+                  Click the yellow buttons to see inline events...
+                </div>
+              </div>
+              <button
+                onclick="document.getElementById('inlineLog').innerHTML = '<div class=\'text-gray-500\'>Click the yellow buttons to see inline events...</div>'"
+                class="mt-2 bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm"
+              >
+                Clear Log
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Method 2: Property Method -->
+        <div class="mb-8 bg-white rounded-xl p-6 shadow-lg method-demo">
+          <div class="flex items-center mb-4">
+            <div class="method-badge property-badge mr-3">Method 2</div>
+            <h3 class="text-xl font-semibold text-purple-700">
+              Property Method (onclick, onmouseover, etc.)
+            </h3>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-6">
+            <div>
+              <div
+                class="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-4"
+              >
+                <h4 class="font-semibold mb-2">How it works:</h4>
+                <code class="text-sm block mb-2"
+                  >element.onclick = function() { ... }</code
+                >
+                <p class="text-sm text-gray-600">
+                  Assign a function to the element's event property.
+                </p>
+              </div>
+
+              <div class="space-y-3">
+                <button
+                  id="propertyBtn1"
+                  class="demo-button bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded w-full"
+                >
+                  🟣 Property Handler - Button 1
+                </button>
+
+                <button
+                  id="propertyBtn2"
+                  class="demo-button bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded w-full"
+                >
+                  🟣 Property Handler - Button 2
+                </button>
+
+                <div class="bg-gray-100 p-3 rounded">
+                  <strong>Pros:</strong> Separates HTML and JavaScript<br />
+                  <strong>Cons:</strong> Only one handler per event type
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="font-semibold mb-3">Property Method Log:</h4>
+              <div
+                id="propertyLog"
+                class="bg-purple-50 border rounded-lg p-4 h-48 overflow-y-auto font-mono text-sm"
+              >
+                <div class="text-gray-500">
+                  Click the purple buttons to see property events...
+                </div>
+              </div>
+              <button
+                id="clearPropertyLog"
+                class="mt-2 bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm"
+              >
+                Clear Log
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Method 3: addEventListener -->
+        <div class="mb-8 bg-white rounded-xl p-6 shadow-lg method-demo">
+          <div class="flex items-center mb-4">
+            <div class="method-badge listener-badge mr-3">Method 3</div>
+            <h3 class="text-xl font-semibold text-green-700">
+              addEventListener Method
+            </h3>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-6">
+            <div>
+              <div
+                class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4"
+              >
+                <h4 class="font-semibold mb-2">How it works:</h4>
+                <code class="text-sm block mb-2"
+                  >element.addEventListener('click', function() { ... })</code
+                >
+                <p class="text-sm text-gray-600">
+                  Modern method that allows multiple handlers for the same
+                  event.
+                </p>
+              </div>
+
+              <div class="space-y-3">
+                <button
+                  id="listenerBtn1"
+                  class="demo-button bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded w-full"
+                >
+                  🟢 addEventListener - Button 1
+                </button>
+
+                <button
+                  id="listenerBtn2"
+                  class="demo-button bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded w-full"
+                >
+                  🟢 addEventListener - Button 2
+                </button>
+
+                <div class="bg-gray-100 p-3 rounded">
+                  <strong>Pros:</strong> Multiple handlers, more control, modern
+                  standard<br />
+                  <strong>Cons:</strong> Slightly more verbose
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="font-semibold mb-3">addEventListener Log:</h4>
+              <div
+                id="listenerLog"
+                class="bg-green-50 border rounded-lg p-4 h-48 overflow-y-auto font-mono text-sm"
+              >
+                <div class="text-gray-500">
+                  Click the green buttons to see addEventListener events...
+                </div>
+              </div>
+              <button
+                id="clearListenerLog"
+                class="mt-2 bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm"
+              >
+                Clear Log
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Execution Order Demo -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-red-700 mb-6">
+          ⚡ Execution Order: Which Runs First?
+        </h2>
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="grid lg:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-lg font-semibold mb-4">
+                🏁 Test All Three Methods
+              </h3>
+              <p class="text-gray-600 mb-4">
+                This button has ALL THREE event handling methods attached. Click
+                to see the execution order!
+              </p>
+
+              <button
+                id="executionOrderBtn"
+                onclick="logExecution('1. Inline HTML Handler')"
+                class="demo-button bg-gradient-to-r from-yellow-400 via-purple-500 to-green-500 text-white px-6 py-4 rounded-lg font-bold text-lg w-full mb-4"
+              >
+                🎯 Click to Test Execution Order
+              </button>
+
+              <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h4 class="font-semibold text-blue-800 mb-2">
+                  📋 Expected Order:
+                </h4>
+                <ol class="text-sm text-blue-700 space-y-1">
+                  <li>1️⃣ <strong>Inline HTML</strong> (onclick attribute)</li>
+                  <li>2️⃣ <strong>Property Method</strong> (element.onclick)</li>
+                  <li>
+                    3️⃣ <strong>addEventListener</strong> (in order they were
+                    added)
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-semibold mb-4">📊 Execution Log:</h3>
+              <div
+                id="executionLog"
+                class="bg-gray-50 border rounded-lg p-4 h-64 overflow-y-auto font-mono text-sm"
+              >
+                <div class="text-gray-500">
+                  Click the test button to see execution order...
+                </div>
+              </div>
+              <button
+                id="clearExecutionLog"
+                class="mt-4 bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm"
+              >
+                Clear Execution Log
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WHY Property Method Overrides Inline HTML -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-red-700 mb-6">
+          🧠 Why Property Method OVERWRITES Inline HTML
+        </h2>
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="mb-8 bg-red-50 border-2 border-red-200 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-red-800 mb-4">
+              🚨 IMPORTANT: It's Not About Execution Order!
+            </h3>
+            <p class="text-red-700 text-lg">
+              The property method doesn't "run after" the inline HTML - it
+              completely <strong>REPLACES</strong> it before any event even
+              happens!
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-lg font-semibold mb-4">
+                🔍 What Really Happens Inside the Browser
+              </h3>
+
+              <div class="space-y-4">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h4 class="font-semibold text-blue-800 mb-2">
+                    Step 1: HTML Parsing
+                  </h4>
+                  <code class="text-sm block mb-2 bg-blue-100 p-2 rounded">
+                    &lt;button onclick="myFunction()"&gt;
+                  </code>
+                  <p class="text-sm text-blue-700">
+                    Browser converts this to:
+                    <code>element.onclick = function() { myFunction(); }</code>
+                  </p>
+                </div>
+
+                <div
+                  class="bg-purple-50 border border-purple-200 rounded-lg p-4"
+                >
+                  <h4 class="font-semibold text-purple-800 mb-2">
+                    Step 2: JavaScript Execution
+                  </h4>
+                  <code class="text-sm block mb-2 bg-purple-100 p-2 rounded">
+                    element.onclick = myNewFunction;
+                  </code>
+                  <p class="text-sm text-purple-700">
+                    This <strong>overwrites</strong> the previous onclick value
+                    completely!
+                  </p>
+                </div>
+
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <h4 class="font-semibold text-green-800 mb-2">
+                    Step 3: Event Listeners
+                  </h4>
+                  <code class="text-sm block mb-2 bg-green-100 p-2 rounded">
+                    element.addEventListener('click', handler);
+                  </code>
+                  <p class="text-sm text-green-700">
+                    These go into a separate list, they don't overwrite
+                    anything!
+                  </p>
+                </div>
+              </div>
+
+              <button
+                id="showBrowserProcess"
+                class="mt-4 bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded w-full"
+              >
+                🔬 Show Step-by-Step Browser Process
+              </button>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-semibold mb-4">
+                📋 Browser Internal Process Log:
+              </h3>
+              <div
+                id="browserProcessLog"
+                class="bg-gray-50 border rounded-lg p-4 h-80 overflow-y-auto font-mono text-sm"
+              >
+                <div class="text-gray-500">
+                  Click "Show Step-by-Step Browser Process" to see what happens
+                  internally...
+                </div>
+              </div>
+              <button
+                id="resetBrowserProcess"
+                class="mt-4 bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm"
+              >
+                Reset Process
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Demonstration -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-purple-700 mb-6">
+          🎮 Interactive Demonstration
+        </h2>
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="grid lg:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-lg font-semibold mb-4">
+                🧪 Three Test Scenarios
+              </h3>
+
+              <div class="space-y-4">
+                <div
+                  class="bg-yellow-50 border border-yellow-200 rounded-lg p-4"
+                >
+                  <h4 class="font-semibold text-yellow-800 mb-2">
+                    Scenario 1: Only Inline HTML
+                  </h4>
+                  <button
+                    id="onlyInlineBtn"
+                    onclick="logScenario('Inline HTML handler executed!', 'yellow')"
+                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded w-full"
+                  >
+                    🟡 Only Inline Handler
+                  </button>
+                  <p class="text-xs text-yellow-700 mt-2">
+                    This works because nothing overwrites it
+                  </p>
+                </div>
+
+                <div
+                  class="bg-purple-50 border border-purple-200 rounded-lg p-4"
+                >
+                  <h4 class="font-semibold text-purple-800 mb-2">
+                    Scenario 2: Inline + Property Method
+                  </h4>
+                  <button
+                    id="inlinePropertyBtn"
+                    onclick="logScenario('❌ This will NEVER run!', 'red')"
+                    class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded w-full"
+                  >
+                    🟣 Inline + Property (Property Wins!)
+                  </button>
+                  <p class="text-xs text-purple-700 mt-2">
+                    Property method completely replaces inline
+                  </p>
+                </div>
+
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <h4 class="font-semibold text-green-800 mb-2">
+                    Scenario 3: All Three Methods
+                  </h4>
+                  <button
+                    id="allThreeBtn"
+                    onclick="logScenario('❌ This will NEVER run!', 'red')"
+                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded w-full"
+                  >
+                    🟢 All Three (Inline + Property + Listeners)
+                  </button>
+                  <p class="text-xs text-green-700 mt-2">
+                    Only property method and event listeners execute
+                  </p>
+                </div>
+              </div>
+
+              <button
+                id="clearScenarioLog"
+                class="mt-4 bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm w-full"
+              >
+                Clear Scenario Log
+              </button>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-semibold mb-4">📋 Scenario Results:</h3>
+              <div
+                id="scenarioLog"
+                class="bg-gray-50 border rounded-lg p-4 h-80 overflow-y-auto font-mono text-sm"
+              >
+                <div class="text-gray-500">
+                  Click the scenario buttons above to see what actually
+                  executes...
+                </div>
+              </div>
+
+              <div class="mt-4 bg-red-50 border border-red-200 rounded-lg p-3">
+                <h4 class="font-semibold text-red-800 mb-2">
+                  🔍 Key Observation:
+                </h4>
+                <p class="text-sm text-red-700">
+                  Notice how the inline onclick function NEVER executes in
+                  scenarios 2 and 3!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Queue Explanation -->
+      <!-- <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-teal-700 mb-6">
+          🚛 How Event Listeners Use a Separate Queue
+        </h2>
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="mb-6 bg-teal-50 border-2 border-teal-200 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-teal-800 mb-4">
+              📦 Think of it Like a Delivery System
+            </h3>
+            <p class="text-teal-700 text-lg">
+              The browser has TWO different ways to handle events - like having
+              a mailbox AND a package delivery service!
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-lg font-semibold mb-4">
+                📬 The onclick Property (Mailbox)
+              </h3>
+              <div
+                class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4"
+              >
+                <div class="text-sm space-y-2">
+                  <p>
+                    <strong>🏠 Location:</strong> Attached directly to the
+                    element
+                  </p>
+                  <p><strong>📝 Storage:</strong> element.onclick = function</p>
+                  <p>
+                    <strong>🔢 Capacity:</strong> Only ONE function at a time
+                  </p>
+                  <p>
+                    <strong>🔄 Replacement:</strong> New assignment overwrites
+                    old one
+                  </p>
+                  <p>
+                    <strong>⚡ Execution:</strong> Runs first when event happens
+                  </p>
+                </div>
+              </div>
+
+              <div class="bg-blue-100 p-3 rounded text-sm">
+                <code>
+                  element.onclick = function1; // Mailbox has function1<br />
+                  element.onclick = function2; // function1 is thrown away!<br />
+                  // Only function2 remains in the mailbox
+                </code>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-semibold mb-4">
+                📦 Event Listeners (Package Queue)
+              </h3>
+              <div
+                class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4"
+              >
+                <div class="text-sm space-y-2">
+                  <p>
+                    <strong>🏠 Location:</strong> Stored in browser's event
+                    system
+                  </p>
+                  <p><strong>📝 Storage:</strong> Array/list of functions</p>
+                  <p><strong>🔢 Capacity:</strong> UNLIMITED functions</p>
+                  <p>
+                    <strong>➕ Addition:</strong> New listeners are added to the
+                    list
+                  </p>
+                  <p>
+                    <strong>⚡ Execution:</strong> All run after onclick
+                    property
+                  </p>
+                </div>
+              </div>
+
+              <div class="bg-green-100 p-3 rounded text-sm">
+                <code>
+                  addEventListener('click', function1); // [function1]<br />
+                  addEventListener('click', function2); // [function1,
+                  function2]<br />
+                  addEventListener('click', function3); // [function1,
+                  function2, function3]<br />
+                  // All functions remain in the queue!
+                </code>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-6"
+          >
+            <h3 class="text-lg font-semibold text-yellow-800 mb-4">
+              🎯 When an Event Happens (Click):
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="font-semibold text-yellow-700 mb-2">
+                  📬 Step 1: Check the Mailbox
+                </h4>
+                <p class="text-sm text-yellow-600">
+                  Browser looks at <code>element.onclick</code>
+                </p>
+                <p class="text-sm text-yellow-600">
+                  If there's a function, run it first
+                </p>
+              </div>
+              <div>
+                <h4 class="font-semibold text-yellow-700 mb-2">
+                  📦 Step 2: Process the Queue
+                </h4>
+                <p class="text-sm text-yellow-600">
+                  Browser goes through the event listener list
+                </p>
+                <p class="text-sm text-yellow-600">
+                  Runs each function in the order they were added
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Speed vs Order Clarification -->
+      <!-- <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-indigo-700 mb-6">
+          ⚡ Speed vs Order: The Truth
+        </h2>
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div
+            class="mb-6 bg-indigo-50 border-2 border-indigo-200 rounded-lg p-6"
+          >
+            <h3 class="text-xl font-bold text-indigo-800 mb-4">
+              🚫 Common Misconception
+            </h3>
+            <p class="text-indigo-700 text-lg">
+              "addEventListener is slower because it runs last" - This is
+              <strong>WRONG!</strong>
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-lg font-semibold mb-4">🏃‍♂️ Speed Test</h3>
+              <p class="text-gray-600 mb-4">
+                Let's measure the actual execution time of both methods:
+              </p>
+
+              <div class="space-y-3">
+                <button
+                  id="speedTestBtn"
+                  class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded w-full"
+                >
+                  ⏱️ Single Event Speed Test
+                </button>
+
+                <button
+                  id="multipleSpeedTestBtn"
+                  class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded w-full"
+                >
+                  🏃‍♂️ 1000 Events Speed Test
+                </button>
+              </div>
+
+              <div class="mt-4 bg-gray-100 p-4 rounded">
+                <h4 class="font-semibold mb-2">🎯 The Real Truth:</h4>
+                <ul class="text-sm space-y-1">
+                  <li>• Both methods execute in microseconds</li>
+                  <li>• The difference is negligible (0.001ms or less)</li>
+                  <li>• Order ≠ Speed</li>
+                  <li>
+                    • addEventListener runs "after" by design, not because it's
+                    slow
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-semibold mb-4">📊 Speed Test Results:</h3>
+              <div
+                id="speedTestLog"
+                class="bg-gray-50 border rounded-lg p-4 h-64 overflow-y-auto font-mono text-sm"
+              >
+                <div class="text-gray-500">
+                  Click the speed test buttons to see actual performance
+                  measurements...
+                </div>
+              </div>
+
+              <div
+                class="mt-4 bg-green-50 border border-green-200 rounded-lg p-3"
+              >
+                <h4 class="font-semibold text-green-800 mb-2">
+                  💡 Key Insight:
+                </h4>
+                <p class="text-sm text-green-700">
+                  The execution order is determined by the DOM Event Model
+                  specification, not by performance differences!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Interactive Comparison Table -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-teal-700 mb-6">
+          📊 Interactive Method Comparison
+        </h2>
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="comparison-table overflow-x-auto">
+            <table class="w-full border-collapse">
+              <thead>
+                <tr class="bg-gray-100">
+                  <th
+                    class="border border-gray-300 p-3 text-left font-semibold"
+                  >
+                    Feature
+                  </th>
+                  <th class="border border-gray-300 p-3 text-center table-cell">
+                    <div class="method-badge inline-badge mb-1">Method 1</div>
+                    <br />
+                    Inline HTML
+                  </th>
+                  <th class="border border-gray-300 p-3 text-center table-cell">
+                    <div class="method-badge property-badge mb-1">Method 2</div>
+                    <br />
+                    Property Method
+                  </th>
+                  <th class="border border-gray-300 p-3 text-center table-cell">
+                    <div class="method-badge listener-badge mb-1">Method 3</div>
+                    <br />
+                    addEventListener
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hover:bg-gray-50">
+                  <td class="border border-gray-300 p-3 font-medium">Syntax</td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <code class="text-xs bg-yellow-100 p-1 rounded"
+                      >onclick="fn()"</code
+                    >
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <code class="text-xs bg-purple-100 p-1 rounded"
+                      >el.onclick = fn</code
+                    >
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <code class="text-xs bg-green-100 p-1 rounded"
+                      >el.addEventListener</code
+                    >
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="border border-gray-300 p-3 font-medium">
+                    Multiple Handlers
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-red-600 font-bold">❌ No</span>
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-red-600 font-bold">❌ No</span>
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-green-600 font-bold">✅ Yes</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="border border-gray-300 p-3 font-medium">
+                    HTML/JS Separation
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-red-600 font-bold">❌ Mixed</span>
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-green-600 font-bold">✅ Separated</span>
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-green-600 font-bold">✅ Separated</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="border border-gray-300 p-3 font-medium">
+                    Event Object Access
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-yellow-600 font-bold">⚠️ Limited</span>
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-green-600 font-bold">✅ Full</span>
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-green-600 font-bold">✅ Full</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="border border-gray-300 p-3 font-medium">
+                    Remove Handler
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-red-600 font-bold">❌ Difficult</span>
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-yellow-600 font-bold"
+                      >⚠️ el.onclick = null</span
+                    >
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-green-600 font-bold"
+                      >✅ removeEventListener</span
+                    >
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="border border-gray-300 p-3 font-medium">
+                    Browser Support
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-green-600 font-bold">✅ All</span>
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-green-600 font-bold">✅ All</span>
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-green-600 font-bold">✅ Modern</span>
+                  </td>
+                </tr>
+                <tr class="hover:bg-gray-50">
+                  <td class="border border-gray-300 p-3 font-medium">
+                    Best Practice
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-red-600 font-bold">❌ Avoid</span>
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-yellow-600 font-bold"
+                      >⚠️ Limited Use</span
+                    >
+                  </td>
+                  <td class="border border-gray-300 p-3 text-center">
+                    <span class="text-green-600 font-bold">✅ Recommended</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mt-6 grid md:grid-cols-3 gap-4">
+            <button
+              id="testInlineFeature"
+              class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
+            >
+              Test Inline Features
+            </button>
+            <button
+              id="testPropertyFeature"
+              class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded"
+            >
+              Test Property Features
+            </button>
+            <button
+              id="testListenerFeature"
+              class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+            >
+              Test addEventListener Features
+            </button>
+          </div>
+
+          <div
+            id="featureTestResults"
+            class="mt-4 p-4 bg-gray-50 rounded-lg min-h-[100px]"
+          >
+            <div class="text-gray-500">
+              Click the test buttons above to see feature demonstrations...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multiple addEventListener Handlers -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-cyan-700 mb-6">
+          🔄 Multiple addEventListener Handlers
+        </h2>
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="grid lg:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-lg font-semibold mb-4">
+                🎯 Adding Multiple Handlers
+              </h3>
+              <div
+                class="bg-cyan-50 border border-cyan-200 rounded-lg p-4 mb-4"
+              >
+                <code class="text-sm block mb-2">
+                  // You can add multiple handlers for the same event!<br />
+                  button.addEventListener('click', handler1);<br />
+                  button.addEventListener('click', handler2);<br />
+                  button.addEventListener('click', handler3);
+                </code>
+              </div>
+
+              <div class="space-y-3">
+                <button
+                  id="multiHandlerBtn"
+                  class="demo-button bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-3 rounded w-full font-medium"
+                >
+                  🎪 Button with Multiple Handlers
+                </button>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <button
+                    id="addHandler"
+                    class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded text-sm"
+                  >
+                    ➕ Add Handler
+                  </button>
+                  <button
+                    id="removeHandler"
+                    class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm"
+                  >
+                    ➖ Remove Handler
+                  </button>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                  <div class="text-sm font-medium text-blue-800 mb-1">
+                    Active Handlers:
+                  </div>
+                  <div id="handlerCount" class="text-blue-600 font-bold">
+                    0 handlers attached
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-semibold mb-4">
+                📋 Multiple Handler Log:
+              </h3>
+              <div
+                id="multiHandlerLog"
+                class="bg-cyan-50 border rounded-lg p-4 h-64 overflow-y-auto font-mono text-sm"
+              >
+                <div class="text-gray-500">
+                  Add handlers and click the button to see them execute...
+                </div>
+              </div>
+              <button
+                id="clearMultiLog"
+                class="mt-4 bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm"
+              >
+                Clear Log
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Property Method Override Demo -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-semibold text-orange-700 mb-6">
+          ⚠️ Property Method Override Problem
+        </h2>
+        <div class="bg-white rounded-xl p-8 shadow-lg">
+          <div class="grid lg:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-lg font-semibold mb-4">
+                🔄 Override Demonstration
+              </h3>
+              <div
+                class="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-4"
+              >
+                <h4 class="font-semibold text-orange-800 mb-2">
+                  ⚠️ Problem with Property Method:
+                </h4>
+                <code class="text-sm block mb-2">
+                  button.onclick = function() { alert('First'); };<br />
+                  button.onclick = function() { alert('Second'); };<br />
+                  // Only 'Second' will execute!
+                </code>
+                <p class="text-sm text-orange-700">
+                  The second assignment overwrites the first!
+                </p>
+              </div>
+
+              <div class="space-y-3">
+                <button
+                  id="overrideBtn"
+                  class="demo-button bg-orange-500 hover:bg-orange-600 text-white px-4 py-3 rounded w-full font-medium"
+                >
+                  🔄 Property Override Test Button
+                </button>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <button
+                    id="setFirstHandler"
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded text-sm"
+                  >
+                    Set Handler 1
+                  </button>
+                  <button
+                    id="setSecondHandler"
+                    class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 rounded text-sm"
+                  >
+                    Set Handler 2 (Override!)
+                  </button>
+                </div>
+
+                <button
+                  id="resetOverride"
+                  class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm w-full"
+                >
+                  Reset (Remove All)
+                </button>
+
+                <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+                  <div class="text-sm font-medium text-red-800 mb-1">
+                    Current Handler:
+                  </div>
+                  <div id="currentHandler" class="text-red-600 font-bold">
+                    None
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-semibold mb-4">📋 Override Demo Log:</h3>
+              <div
+                id="overrideLog"
+                class="bg-orange-50 border rounded-lg p-4 h-64 overflow-y-auto font-mono text-sm"
+              >
+                <div class="text-gray-500">
+                  Set handlers and click the button to see override behavior...
+                </div>
+              </div>
+              <button
+                id="clearOverrideLog"
+                class="mt-4 bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm"
+              >
+                Clear Log
+              </button>
+
+              <div
+                class="mt-4 bg-green-50 border border-green-200 rounded-lg p-3"
+              >
+                <h4 class="font-semibold text-green-800 mb-2">✅ Solution:</h4>
+                <p class="text-sm text-green-700">
+                  Use <code>addEventListener</code> to avoid this problem - it
+                  allows multiple handlers without overriding!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Best Practices Summary -->
+      <div class="bg-white rounded-xl p-8 shadow-lg">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">
+          🏆 Best Practices & Recommendations
+        </h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-lg font-semibold text-green-700 mb-4">
+              ✅ Recommended Approach
+            </h3>
+            <div class="space-y-3">
+              <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                <h4 class="font-semibold text-green-800 mb-2">
+                  Use addEventListener
+                </h4>
+                <p class="text-sm text-green-700">
+                  Modern, flexible, allows multiple handlers, better control
+                </p>
+              </div>
+              <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                <h4 class="font-semibold text-green-800 mb-2">
+                  Separate HTML and JavaScript
+                </h4>
+                <p class="text-sm text-green-700">
+                  Keep event handling in JavaScript files, not HTML attributes
+                </p>
+              </div>
+              <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                <h4 class="font-semibold text-green-800 mb-2">
+                  Use removeEventListener
+                </h4>
+                <p class="text-sm text-green-700">
+                  Clean up event listeners when elements are removed
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold text-red-700 mb-4">
+              ❌ What to Avoid
+            </h3>
+            <div class="space-y-3">
+              <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                <h4 class="font-semibold text-red-800 mb-2">
+                  Inline HTML Handlers
+                </h4>
+                <p class="text-sm text-red-700">
+                  Mixes concerns, hard to maintain, security issues
+                </p>
+              </div>
+              <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                <h4 class="font-semibold text-red-800 mb-2">
+                  Property Method for Complex Apps
+                </h4>
+                <p class="text-sm text-red-700">
+                  Limited to one handler, easy to accidentally override
+                </p>
+              </div>
+              <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                <h4 class="font-semibold text-red-800 mb-2">
+                  Forgetting to Remove Listeners
+                </h4>
+                <p class="text-sm text-red-700">
+                  Can cause memory leaks in dynamic applications
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="event-handling-methods.js"></script>
+  </body>
+</html>
